@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>popup</title>
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/maskedinput.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+
+
+</head>
+<body>
+
+<!-- Модальное Окно  -->
+<div id="overlay">
+		<div class="popup">
+				<div id="popup-gift-content"></div>
+
+				<button class="close" title="Закрыть" onclick="document.getElementById('overlay').style.display='none';"></button>
+		</div>
+</div>
+<div id="x">Получить подарок</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("body").click(function(e){ 
+			if (e.target.id == 'overlay') {
+				$('.close').trigger('click'); 
+			}
+		});
+
+	});
+</script>
+</body>
+</html>

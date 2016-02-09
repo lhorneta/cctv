@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>  
+    <name>option_description_ocmod</name>
+    <id>invoice_prod_image_logo_ocmod</id>
+    <version>1.0 option_description_ocmod</version>
+    <author>ocextensions.co.uk for cancer research</author>
+    <link>mailto:support@ocextensions.co.uk</link>
+    <code>option_description_ocmod</code>
+    <file path="admin/controller/catalog/product.php"> 
+        <operation>
+            <search><![CDATA[$this->load->language('catalog/product');]]></search>
+            <add position="after"><![CDATA[		$this->load->language('catalog/desc');]]></add>
+        </operation>
+        <operation>
+            <search><![CDATA[$this->language->get('entry_option_value');]]></search>
+            <add position="after"><![CDATA[		$data['entry_option_description'] = $this->language->get('entry_option_description');]]></add>
+        </operation>
+        <operation>
+            <search index="0"><![CDATA[$product_option_value['points_prefix'],]]></search>
+            <add position="after"><![CDATA[                                                'o_description'           => $product_option_value['o_description'],]]></add>
+        </operation> 
+    </file> 
+    <file path="admin/model/catalog/product.php"> 
+        <operation>
+            <search index="0,1"><![CDATA[(float)$product_option_value['weight'] . "',]]></search>
+            <add position="replace"><![CDATA[(float)$product_option_value['weight'] . "',  o_description = '" . $this->db->escape($product_option_value['o_description']) .  "',]]></add>
+        </operation>  
+        <operation>
+            <search><![CDATA[$product_option_value['weight'],]]></search>
+            <add position="after"><![CDATA[                                        'o_description'             => $product_option_value['o_description'],]]></add>
+        </operation>
+    </file> 
+         
+    <file path="admin/view/template/catalog/product_form.tpl">  
+        <operation>
+            <search><![CDATA[value="<?php echo $product_option_value['quantity']; ?>"]]></search>
+            <add position="before"><![CDATA[                   <td><textarea name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][o_description]" cols="30" rows="2"><?php echo $product_option_value['o_description']; ?></textarea></td>]]></add>
+        </operation>
+        <operation>
+            <search index="0" ><![CDATA[<td class="text-left"><?php echo $entry_option_value; ?></td>]]></search>
+            <add position="after"><![CDATA[                  <td class="text-left"><?php echo $entry_option_description; ?></td> ]]></add>
+        </operation>
+        <operation>
+            <search index="1" ><![CDATA[<td class="text-left"><?php echo $entry_option_value; ?></td>]]></search>
+            <add position="after"><![CDATA[			html += '        <td class="text-left"><?php echo $entry_option_description; ?></td>';]]></add>
+        </operation>
+        <operation>
+            <search index="0,2" ><![CDATA[<td colspan="6">]]></search>
+            <add position="replace"><![CDATA[<td colspan="7">]]></add>
+        </operation>
+        <operation>
+            <search><![CDATA[[product_option_value_id]" value="" /></td>';]]></search>
+            <add position="after"><![CDATA[        html += '  <td><textarea name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][o_description]" cols="30" rows="2"></textarea></td>';]]></add>
+        </operation>
+    </file> 
+    <file path="catalog/model/catalog/product.php">   
+        <operation>
+            <search><![CDATA[$product_option_value['weight'],]]></search>
+            <add position="after"><![CDATA[                                                'o_description'           => $product_option_value['o_description'],]]></add>
+        </operation>
+    </file>
+    <file path="catalog/controller/product/product.php"> 
+        <operation>
+            <search><![CDATA[$option_value['option_value_id'],]]></search>
+            <add position="after"><![CDATA[                                                                'o_description'           => html_entity_decode($option_value['o_description']),]]></add>
+        </operation>   
+              
+    </file>
+</modification>
